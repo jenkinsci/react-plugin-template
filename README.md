@@ -1,34 +1,39 @@
-# Demo Working Hours Plugin Implemented with React
+# React Boilerplate for Jenkins Plugin
 
-This is the development repo for [Jenkins Working Hours Plugin](https://github.com/jenkinsci/working-hours-plugin), the new features will be updated and tested in this repo.
+## Overview
+This is a boilerplate project for building Jenkins plugin with React.
 
-## Run Standalone Web App
-The frontend app is built with Webpack and React, running a standalone web app outside the Jenkins plugin is simple as below:
+This boilerplate is part of the project [Working Hours UI Improvement](https://summerofcode.withgoogle.com/projects/#6112735123734528) during
+[Google Summer of Code 2019](https://summerofcode.withgoogle.com/), which uses this pattern to develop Jenkins plugin with React.
 
-After the repo is cloned:
-```bash
-cd ./working-hours-plugin/react 
-# This is where our React sub-project located.
+## Features
 
-yarn install or npm install
-# Install the dependencies
+| Feature                                | Summary|
+|----------------------------------------|---------------|
+|React Integrated | React is intergreted, your can take full control of the UI|
+|Using Iframe|Using iframe could create a new javascript env, we can get rid of some side effects of some polyfills which is added gloablly.(such as Prototype.js)|
+|Maven Lifecycle|npm commands are integrated into Maven lifecycle with help of [Frontend Maven Plugin](https://github.com/eirslett/frontend-maven-plugin/)|
+|Webpack |Webpack helps us reduce the size of the bundle, also avoids pollution on the global namespace.|
+|Express as devserver|You can run your react app in a standalone page so you can develop in webpack hot reload mode, also with webpack proxy, the standalone app is still accessible to the jenkins dev server|
+|Axios as http client| Axios hugely simplify the way to make requests.
 
-yarn run start or npm run start
-# Start the dev server
+
+## Getting Started
+
+Clone the repo:
+```sh
+git clone https://github.com/ShenJack/ReactBoilerplateforJenkinsPlugin.git
+cd ReactBoilerplateforJenkinsPlugin
 ```
-Then the web app is running at [http://localhost:3000](http://localhost:3000), any changes in the `app` directory could be sync to the web page at once.
-
-## Send/Fetch Data From the Plugin Service
-
-In order to interact with the plugin service so that we could persistent out data, we need to run the plugin:
-
-```bash
-#make sure that you are under the root dir.
-
-mvn package
-mvn install
-mvn hpi:run 
+Install the Maven dependencies and node modules.
+```sh
+mvn install -DskipTests
 ```
-
-When the jenkins is running, our requests could be proxied to the jenkins service.
-
+Run standalone React app
+```sh
+npm run start
+```
+Run plugin
+```sh
+mvn hpi:run -Dskip.npm -f pom.xml
+```
