@@ -1,0 +1,15 @@
+.custom-handle {
+    box-shadow: 0 0 5px #868686;
+    background-color: white;
+    border: 4px solid rgb(200, 200, 200);
+}
+
+.custom-handle:active {
+    box-shadow: 0 0 5px 1px #868686;
+    background-color: white;
+    border: 4px solid rgb(200, 200, 200);
+}
+
+.rc-slider-dot-active{
+    border-color: rgb(177, 177, 177);
+}

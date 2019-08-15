@@ -1,0 +1,4 @@
+<?jelly escape-by-default='true'?>
+<div>
+    Provides step to prevent a job from running outside configured working hours.
+</div>
