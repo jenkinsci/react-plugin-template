@@ -20,8 +20,8 @@
                 data-crumbtoken-field="${it.crumbRequestField}"
                 data-crumbtoken="${it.crumbToken}"
                 style="border: none;min-width: 800px"
-                id="container-excluded-dates"
-                width="100%" src="${resURL}/plugin/working-hours/page/index.html"
+                id="react-boilerplate-container"
+                width="100%" src="${resURL}/plugin/react-boilerplate/page/index.html"
                 onload="resizeIframe(this)"/>
         </l:main-panel>
     </l:layout>

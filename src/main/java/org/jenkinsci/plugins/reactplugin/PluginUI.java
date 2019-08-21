@@ -12,20 +12,26 @@ import org.jenkinsci.plugins.reactplugin.model.Todo;
 import org.kohsuke.stapler.HttpResponse;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.json.JsonHttpResponse;
+import org.kohsuke.stapler.StaplerProxy;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PluginUI {
+public class PluginUI implements StaplerProxy {
     private PluginConfig config;
 
     public PluginUI() {
     }
 
+    @Override
+    public Object getTarget() {
+        return this;
+    }
+
     /**
-     * Handle dynamic routes, and do process on set/get excluded
-     * dates and time ranges.
+     * Handle dynamic routes, and do process on set/get excluded dates and time
+     * ranges.
      *
      * @param request Request object passed by Stapler
      * @return A JSON Response that handle back to client.
@@ -46,18 +52,18 @@ public class PluginUI {
             }
         }
 
-        // TODO: 28/5/2019 use request method to classify manipulations
-
         switch (params.get(0)) {
-            case "todos":
-                return getTodos();
+        case "get-todos":
+            return getTodos();
+        case "set-todos":
+            return setTodos(request);
         }
 
         throw new JsonHttpResponse(new JSONObject());
     }
 
     /**
-     * Stapler's handler for getting the list of region's code.
+     * Stapler's handler for getting the list of todos.
      *
      * @return {@link HttpResponse} Response with data.
      */
@@ -79,8 +85,6 @@ public class PluginUI {
         return getTodos();
     }
 
-
-
     /**
      * Get body from a post request.
      *
@@ -97,7 +101,6 @@ public class PluginUI {
         }
         return body;
     }
-
 
     /**
      * Get the crumb token value
@@ -118,4 +121,5 @@ public class PluginUI {
         CrumbIssuer crumbIssuer = Jenkins.getInstance().getCrumbIssuer();
         return crumbIssuer == null ? StringUtils.EMPTY : crumbIssuer.getCrumbRequestField();
     }
+
 }

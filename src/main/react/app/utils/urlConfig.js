@@ -8,16 +8,16 @@ let loaded = false;
 
 function loadConfig() {
   try {
-    const headElement = window.parent.document.getElementById('container-excluded-dates');
+    const iframeElement = window.parent.document.getElementById('container-excluded-dates');
 
     // typically '/jenkins/'
-    jenkinsRootURL = headElement.getAttribute('data-rooturl');
+    jenkinsRootURL = iframeElement.getAttribute('data-rooturl');
     if (typeof jenkinsRootURL !== 'string') {
       jenkinsRootURL = '/';
     }
 
     // typically '/jenkins/blue'
-    blueOceanAppURL = headElement.getAttribute('data-appurl');
+    blueOceanAppURL = iframeElement.getAttribute('data-appurl');
     if (typeof blueOceanAppURL !== 'string') {
       blueOceanAppURL = '/';
     }
@@ -26,13 +26,13 @@ function loadConfig() {
     restBaseURL = `${blueOceanAppURL}/rest`.replace(/\/\/+/g, '/'); // eliminate any duplicated slashes
 
     // load crumb token used for POST requests
-    crumbToken = headElement.getAttribute('data-crumbtoken');
+    crumbToken = iframeElement.getAttribute('data-crumbtoken');
     if (typeof crumbToken !== 'string') {
       crumbToken = '';
     }
 
     // load crumb header name used for POST requests
-    crumbHeaderName = headElement.getAttribute('data-crumbtoken-field');
+    crumbHeaderName = iframeElement.getAttribute('data-crumbtoken-field');
     if (typeof crumbHeaderName !== 'string') {
       crumbHeaderName = '';
     }
