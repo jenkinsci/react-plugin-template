@@ -11,16 +11,24 @@ This boilerplate is part of the project [Working Hours UI Improvement](https://s
 
 ## Features
 
-| Feature                                | Summary|
-|----------------------------------------|---------------|
-|React Integrated | React is integrated, your can take full control of the UI|
-|Using Iframe|Using iframe could create a new javascript env, we can get rid of some side effects of some polyfills which was added globally.(such as Prototype.js)|
-|Maven Lifecycle|npm commands are integrated into Maven lifecycle with help of [Frontend Maven Plugin](https://github.com/eirslett/frontend-maven-plugin/)|
-|Webpack |Webpack helps us reduce the size of the bundle, also avoids pollution on the global namespace.|
-|Free to make requests|Crumb is attached to Axios client, now you can send requests in the way you used to do in React|
-|Express as devserver|You can run your react app in a standalone page so you can develop in webpack hot reload mode, also with webpack proxy, the standalone app is still accessible to the jenkins dev server|
-|Axios as http client| Axios hugely simplify the way to make requests.
+| Feature               | Summary                                                                                                                                                                                  |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| React Integrated      | React is integrated, your can take full control of the UI                                                                                                                                |
+| Using Iframe          | Using iframe could create a new javascript env, we can get rid of some side effects of some polyfills which was added globally.(such as Prototype.js)                                    |
+| Maven Lifecycle       | npm commands are integrated into Maven lifecycle with help of [Frontend Maven Plugin](https://github.com/eirslett/frontend-maven-plugin/)                                                |
+| Webpack               | Webpack helps us reduce the size of the bundle, also avoids pollution on the global namespace.                                                                                           |
+| Free to make requests | Crumb is attached to Axios client, now you can send requests in the way you used to do in React                                                                                          |
+| Express as devserver  | You can run your react app in a standalone page so you can develop in webpack hot reload mode, also with webpack proxy, the standalone app is still accessible to the jenkins dev server |
+| Axios as http client  | Axios hugely simplify the way to make requests.|
 
+## Screenshots
+
+Example Plugin UI
+
+![](./images/plugin-ui.jpg)
+Management Link
+
+![](./images/management-link.jpg)
 
 ## Getting Started
 
@@ -45,11 +53,21 @@ mvn hpi:run -Dskip.npm -f pom.xml
 
 ## Send HTTP requests
 
-As Crumb is default open is Jenkins and each ajax request is required to contain a crumb, so be sure to use the `axiosInstance` which is set up with Jenkins Crumb and exported at `src/main/react/app/api.js`.
+As Crumb Issuer is default enabled in Jenkins and each ajax request is required to contain a `Jenkins Crumb` in request header, so be sure to use the `axiosInstance` which is already set up with `Jenkins Crumb` and exported at `src/main/react/app/api.js`.
 ```javascript
 export const apiGetData = () => {
   return axiosInstance.post("/data");
 };
+```
+Or if you want to use your own http client, remember to add the `Jenkins Crumb` to your request's header, the Crumb's key and content could be found at `src/main/react/app/utils/urlConfig.js`, then you can set the header like below.
+
+```javascript
+const headers = {};
+const crumbHeaderName = UrlConfig.getCrumbHeaderName();
+
+if (crumbHeaderName) {
+  headers[crumbHeaderName] = UrlConfig.getCrumbToken();
+}
 ```
 
 ## Write your own request handler
@@ -58,15 +76,39 @@ Now you can customize your request pattern as you want, also we need to write a 
 
 Jenkins is using stapler to preprocess the requests, so if you need a request handler. For example and also in this boilerplate, you can use an `Action` class to create a sub-url, and then a [StaplerProxy](http://stapler.kohsuke.org/reference.html) to proxy the request like a router. More info about a handler can be found here [Stapler Reference](http://stapler.kohsuke.org/reference.html).
 
-Example handler
+### Example handler
+
+ManagementLink would get the request and then handle it to the `PluginUI`
 ```java
 @Extension
 public class PluginManagementLink extends ManagementLink implements StaplerProxy {
-  
+
     PluginUI webapp;
 
     public Object getTarget() {
         return webapp;
+    }
+
+    public String getUrlName() {
+        return "react-boilerplate";
+    }
+}
+```
+`PluginUI`, stapler would then find methods in the target class, in this case, it finds `doDynamic`, then we can choose the next handler by return the methods result, in this case, `getTodos` or `setTodos`, and `PluginUI` just function like a url router.
+```java
+public class PluginUI{
+    public HttpResponse doDynamic(StaplerRequest request) {
+        ...
+
+        List<String> params = getRequestParams(request);
+
+        switch (params.get(0)) {
+        case "get-todos":
+            return getTodos();
+        case "set-todos":
+            return setTodos(request);
+        }
+        ...
     }
 }
 ```
@@ -92,15 +134,17 @@ And in your handler, you can get the config class by calling
 config = ExtensionList.lookup(PluginConfig.class).get(0);
 ```
 
-## Make Requests
-
-In Jelly, we tend to send requests using binding html forms, and get rendered page by Jelly, what if we need to use a React UI with plenty of AJAX requests? This boilerplate has been set up to give the web app a Crumb, just like request token which can help use.
 
 ## Customize your plugin
 
-### Be sure to modify your iframe's id to identify it.
+### Be sure to modify all the occurrence of `react-boilerplate`
 
-Go to `src\main\resources\org\jenkinsci\plugins\workinghours\PluginUI\index.jelly` and change the iframe's id.
+- At `src\main\resources\org\jenkinsci\plugins\workinghours\PluginUI\index.jelly` , change the iframe's id and its source url.
+- At `src\main\react\app\utils\urlConfig.js` change 
+- At `src/main/react/server/config.js` , change the proxy route.
+- At `src/main/react/package.json` , change the start script's BASE_URL
+- At `pom.xml` , change the artifactId
+- At `src\main\java\org\jenkinsci\plugins\reactboilerplate\PluginManagementLink.java` , change names.
 
 Also use the `same value` to modify the occurrence in `src\main\react\app\utils\urlConfig.js`.
 
@@ -108,4 +152,14 @@ Also use the `same value` to modify the occurrence in `src\main\react\app\utils\
 
 Management Link is recommended, which would get your plugin a standalone page, along with a entry button in the `/manage` system manage page.
 
-###
+![](./images/management-link.jpg)
+
+### Or a custom entry
+
+## How does this boilerplate function?
+
+In short, this boiler is like putting a webpack project inside a Maven project, and this boilerplate is just chaining the build result by copy the webpack output to the plugin's webapp folder to make it accessible from the iframe, then Jelly render the iframe and the client gets the Plugin UI.
+
+## Why iframe?
+
+Because jenkins has last a long time, from when JSP or Jelly is widely used to render web pages, added lots of polyfills, like Prototype.js is provided to give extensions to javascript. But it is added to the global namespace, if we simply mount our React app to a point, it'll be disturbed. While iframe is using a new environment from the browser, the interference can be avoided. 
