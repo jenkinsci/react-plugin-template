@@ -154,8 +154,6 @@ Management Link is recommended, which would get your plugin a standalone page, a
 
 ![](./images/management-link.jpg)
 
-### Or a custom entry
-
 ## How does this boilerplate function?
 
 In short, this boiler is like putting a webpack project inside a Maven project, and this boilerplate is just chaining the build result by copy the webpack output to the plugin's webapp folder to make it accessible from the iframe, then Jelly render the iframe and the client gets the Plugin UI.
