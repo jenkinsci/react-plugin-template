@@ -42,6 +42,10 @@ axiosInstance = axios.create(AXIOS_DEFAULT_CONFIG);
 
 export default axiosInstance;
 
-export const apiGetData = () => {
-  return axiosInstance.post("/data");
+export const apiGetTodos = () => {
+  return axiosInstance.post("/get-todos");
+};
+
+export const apiSetTodos = (todos) => {
+  return axiosInstance.post("/set-todos", {data: todos});
 };

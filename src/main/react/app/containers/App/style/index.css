@@ -1,72 +1,3 @@
-.form-item-label {
-    margin-right: 20px;
-    width: 100px;
-    text-align: right;
-    white-space: nowrap;
-    font-weight: lighter;
-}
-
-.form-item-label-sub{
-    width: auto;
-    height: 12px;
-}
-
-.form-row {
-    margin: 17px 0;
-    height: 25px;
-}
-
-.form-row-indent {
-    margin-left: 40px;
-}
-
-.label-inline {
-    margin-right: 15px;
-}
-
-.config-item {
-    padding: 20px;
-    margin: 10px;
-    border: 1px solid #cccccc;
-    border-radius: 6px;
-    background: #f9f9f9;
-}
-
-.config-count{
-    flex: 0 1 auto;
-    align-self: flex-end;
-}
-
-.config-header{
-    margin: 0 10px;
-    display: flex;
-}
-
-.config-title{
-    flex:0 1 auto;
-    font-size: 25px;
-}
-
-.config-loading-status{
-    flex:1 1 auto;
-    align-self: flex-end;
-}
-
-.excluded-date {
-
-}
-
-.time-range {
-    margin: 5px;
-    display: flex;
-}
-
-.time-range-invalid {
-    padding: 5px;
-    border-radius: 3px;
-    border: 1px red dashed;
-}
-
 .btn {
     width: auto;
     height: 29px;
@@ -130,73 +61,19 @@
     padding: 2px 8px;
 }
 
-.input-time {
-    width: 100px;
-    height: 35px;
-    margin: 0 20px;
+.todo-item{
+    align-items: baseline;
+    display: flex;
+    margin: 20px;
+    background: #f2f2f2;
+    padding: 1px 5px;
+    border-radius: 2px;
 }
 
-.label-weekday {
-    padding: 0 10px;
-    min-width: 90px;
-    font-weight: 100;
-    text-align: right;
-    position: relative;
-    width: 90px;
-    height: 35px;
-    border-radius: 7px;
-    background: #d3d3d37d;
-    line-height: 35px;
+.btn-done{
+    opacity: 0.3;
 }
 
-input[type='radio'] {
-    height: 100%;
-}
-
-input[type='checkbox'] {
-    height: 100%;
-}
-
-
-.input-select {
-    padding: 2px;
-}
-
-.select-preset-type{
-    width: 150px;
-    margin-right: 10px
-}
-
-.select-preset-item{
-    width: 300px;
-}
-
-.select-dynamic-item{
-    width: 120px;
-    margin-left: 10px;
-    height: 35px;
-}
-
-.date-control-item{
-    display: inline-flex;
-    margin-left: 5px;
-}
-
-.input-text {
-
-}
-
-.text-highlight {
-    font-weight: bold;
-}
-
-.is-new {
-    width: 10px;
-    height: 10px;
-    background: #28a745;
-    border: 1.5px solid white;
-    position: absolute;
-    right: -4px;
-    top: -4px;
-    border-radius: 5px;
+.btn-done:hover{
+    opacity: 1;
 }

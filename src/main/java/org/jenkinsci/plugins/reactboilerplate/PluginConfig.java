@@ -21,11 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.jenkinsci.plugins.reactplugin;
+package org.jenkinsci.plugins.reactboilerplate;
 
 import hudson.Extension;
-import jenkins.model.GlobalConfiguration;
-import org.jenkinsci.plugins.reactplugin.model.Todo;
+import hudson.model.Describable;
+import hudson.model.Descriptor;
+import org.jenkinsci.plugins.reactboilerplate.model.Todo;
 
 import javax.annotation.CheckForNull;
 import java.util.Collections;
@@ -36,8 +37,8 @@ import java.util.List;
  *
  * @author jxpearce@godaddy.com
  */
-@Extension(optional = true)
-public class PluginConfig extends GlobalConfiguration {
+@Extension
+public class PluginConfig extends Descriptor<PluginConfig> implements Describable<PluginConfig> {
 
     /**
      * The list of valid times.
@@ -52,7 +53,7 @@ public class PluginConfig extends GlobalConfiguration {
      */
     public List<Todo> getTodos() {
         return this.todos == null
-                ? Collections.<Todo>emptyList()
+                ? Collections.emptyList()
                 : this.todos;
     }
 
@@ -65,5 +66,15 @@ public class PluginConfig extends GlobalConfiguration {
             @CheckForNull List<Todo> value) {
         this.todos = value;
         save();
+    }
+
+    @Override
+    public Descriptor<PluginConfig> getDescriptor() {
+        return this;
+    }
+
+    public PluginConfig() {
+        super(self());
+        load();
     }
 }

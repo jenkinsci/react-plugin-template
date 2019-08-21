@@ -148,7 +148,7 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <id>install node and npm</id>
+                        <id>install node and yarn</id>
                         <goals>
                             <goal>install-node-and-npm</goal>
                         </goals>

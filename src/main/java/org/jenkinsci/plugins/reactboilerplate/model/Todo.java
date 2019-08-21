@@ -1,4 +1,4 @@
-package org.jenkinsci.plugins.reactplugin.model;
+package org.jenkinsci.plugins.reactboilerplate.model;
 
 import net.sf.json.JSONObject;
 

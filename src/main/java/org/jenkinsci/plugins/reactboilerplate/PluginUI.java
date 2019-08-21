@@ -1,4 +1,4 @@
-package org.jenkinsci.plugins.reactplugin;
+package org.jenkinsci.plugins.reactboilerplate;
 
 import hudson.ExtensionList;
 import hudson.security.csrf.CrumbIssuer;
@@ -8,25 +8,19 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
-import org.jenkinsci.plugins.reactplugin.model.Todo;
+import org.jenkinsci.plugins.reactboilerplate.model.Todo;
 import org.kohsuke.stapler.HttpResponse;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.json.JsonHttpResponse;
-import org.kohsuke.stapler.StaplerProxy;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PluginUI implements StaplerProxy {
+public class PluginUI {
     private PluginConfig config;
 
     public PluginUI() {
-    }
-
-    @Override
-    public Object getTarget() {
-        return this;
     }
 
     /**
@@ -40,17 +34,9 @@ public class PluginUI implements StaplerProxy {
         if (config == null) {
             config = ExtensionList.lookup(PluginConfig.class).get(0);
         }
-
         String restOfPath = request.getRestOfPath();
 
-        String[] pathTokens = restOfPath.split("/");
-        List<String> params = new ArrayList<>();
-
-        for (String pathToken : pathTokens) {
-            if (pathToken.length() > 0) {
-                params.add(pathToken);
-            }
-        }
+        List<String> params = getRequestParams(request);
 
         switch (params.get(0)) {
         case "get-todos":
@@ -59,7 +45,22 @@ public class PluginUI implements StaplerProxy {
             return setTodos(request);
         }
 
-        throw new JsonHttpResponse(new JSONObject());
+        return HttpResponses.errorJSON("not found");
+    }
+
+    private List<String> getRequestParams(StaplerRequest request) {
+        String restOfPath = request.getRestOfPath();
+        String[] pathTokens = restOfPath.split("/");
+
+        List<String> params = new ArrayList<>();
+
+        for (String pathToken : pathTokens) {
+            if (pathToken.length() > 0) {
+                params.add(pathToken);
+            }
+        }
+
+        return params;
     }
 
     /**
@@ -96,8 +97,7 @@ public class PluginUI implements StaplerProxy {
         try {
             body = JSONObject.fromObject(IOUtils.toString(request.getReader()));
         } catch (IOException e) {
-            // TODO: 28/5/2019 Implement a detailed Error Response
-            throw new JsonHttpResponse(new JSONObject());
+            throw new JsonHttpResponse(new JSONObject().element("message","JSON parse error"));
         }
         return body;
     }
@@ -121,5 +121,4 @@ public class PluginUI implements StaplerProxy {
         CrumbIssuer crumbIssuer = Jenkins.getInstance().getCrumbIssuer();
         return crumbIssuer == null ? StringUtils.EMPTY : crumbIssuer.getCrumbRequestField();
     }
-
 }
