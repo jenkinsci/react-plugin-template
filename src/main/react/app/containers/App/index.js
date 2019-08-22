@@ -72,7 +72,7 @@ export default class App extends React.Component {
     return (
       <div>
         <h3>
-          React Boilerplate for Jenkins Plugin
+          React Plugin Template
         </h3>
         <h4>Todos</h4>
         {todos&&todos.map((item,index)=>

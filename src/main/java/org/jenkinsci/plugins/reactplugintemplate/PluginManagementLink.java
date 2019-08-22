@@ -1,4 +1,4 @@
-package org.jenkinsci.plugins.reactboilerplate;
+package org.jenkinsci.plugins.reactplugintemplate;
 
 import com.google.inject.Binder;
 import com.google.inject.Inject;
@@ -18,19 +18,19 @@ public class PluginManagementLink extends ManagementLink implements StaplerProxy
     @CheckForNull
     @Override
     public String getIconFileName() {
-        return "/plugin/react-boilerplate/images/icon.png";
+        return "/plugin/react-plugin-template/images/icon.png";
     }
 
     @CheckForNull
     @Override
     public String getDisplayName() {
-        return "react-boilerplate";
+        return "react-plugin-template";
     }
 
     @CheckForNull
     @Override
     public String getUrlName() {
-        return "react-boilerplate";
+        return "react-plugin-template";
     }
 
     @Override

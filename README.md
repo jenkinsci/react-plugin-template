@@ -1,12 +1,12 @@
-# React Boilerplate for Jenkins Plugin
+#  React Plugin Template
 
-This is a boilerplate project which builds Jenkins plugin UI with React.
+This is a template project which builds Jenkins plugin UI with React.
 
 ## Overview
 
-Developing plugin for Jenkins has always been an easy way to do with its Jelly based UI render system, but Jelly seems to be pretty heavy when we need to use some more modern tools like React and if we need to make the plugin UI much customized, this is what this boilerplate is built for.
+Developing plugin for Jenkins has always been an easy way to do with its Jelly based UI render system, but Jelly seems to be pretty heavy when we need to use some more modern tools like React and if we need to make the plugin UI much customized, this is what this template is built for.
 
-This boilerplate is part of the project [Working Hours UI Improvement](https://summerofcode.withgoogle.com/projects/#6112735123734528) during
+This template is part of the project [Working Hours UI Improvement](https://summerofcode.withgoogle.com/projects/#6112735123734528) during
 [Google Summer of Code 2019](https://summerofcode.withgoogle.com/), which improve the UI of Working Hours Plugin using this pattern to develop Jenkins plugin with React. The main repository could be found at [Working Hours Plugin](https://github.com/jenkinsci/working-hours-plugin).
 
 ## Features
@@ -34,8 +34,8 @@ Management Link
 
 Clone the repo:
 ```sh
-git clone https://github.com/ShenJack/ReactBoilerplateforJenkinsPlugin.git
-cd ReactBoilerplateforJenkinsPlugin
+git clone https://github.com/jenkinsci/react-plugin-template.git
+cd react-plugin-template
 ```
 Install the Maven dependencies and node modules.
 ```sh
@@ -74,7 +74,7 @@ if (crumbHeaderName) {
 
 Now you can customize your request pattern as you want, also we need to write a handler.
 
-Jenkins is using stapler to preprocess the requests, so if you need a request handler. For example and also in this boilerplate, you can use an `Action` class to create a sub-url, and then a [StaplerProxy](http://stapler.kohsuke.org/reference.html) to proxy the request like a router. More info about a handler can be found here [Stapler Reference](http://stapler.kohsuke.org/reference.html).
+Jenkins is using stapler to preprocess the requests, so if you need a request handler. For example and also in this template, you can use an `Action` class to create a sub-url, and then a [StaplerProxy](http://stapler.kohsuke.org/reference.html) to proxy the request like a router. More info about a handler can be found here [Stapler Reference](http://stapler.kohsuke.org/reference.html).
 
 ### Example handler
 
@@ -90,7 +90,7 @@ public class PluginManagementLink extends ManagementLink implements StaplerProxy
     }
 
     public String getUrlName() {
-        return "react-boilerplate";
+        return "react-plugin-template";
     }
 }
 ```
@@ -137,14 +137,14 @@ config = ExtensionList.lookup(PluginConfig.class).get(0);
 
 ## Customize your plugin
 
-### Be sure to modify all the occurrence of `react-boilerplate`
+### Be sure to modify all the occurrence of `react-plugin-template`
 
-- At `src\main\resources\org\jenkinsci\plugins\workinghours\PluginUI\index.jelly` , change the iframe's id and its source url.
-- At `src\main\react\app\utils\urlConfig.js` change 
+- At `org/jenkinsci/plugins/reactplugintemplate/PluginUI/index.jelly` , change the iframe's id and its source url.
+- At `src/main/react/app/utils/urlConfig.js` change 
 - At `src/main/react/server/config.js` , change the proxy route.
 - At `src/main/react/package.json` , change the start script's BASE_URL
 - At `pom.xml` , change the artifactId
-- At `src\main\java\org\jenkinsci\plugins\reactboilerplate\PluginManagementLink.java` , change names.
+- At `org/jenkinsci/plugins/reactplugintemplate/PluginManagementLink.java` , change names.
 
 Also use the `same value` to modify the occurrence in `src\main\react\app\utils\urlConfig.js`.
 
@@ -154,9 +154,9 @@ Management Link is recommended, which would get your plugin a standalone page, a
 
 ![](./images/management-link.jpg)
 
-## How does this boilerplate function?
+## How does this template function?
 
-In short, this boiler is like putting a webpack project inside a Maven project, and this boilerplate is just chaining the build result by copy the webpack output to the plugin's webapp folder to make it accessible from the iframe, then Jelly render the iframe and the client gets the Plugin UI.
+In short, this template is like putting a webpack project inside a Maven project, and this template is just chaining the build result by copy the webpack output to the plugin's webapp folder to make it accessible from the iframe, then Jelly render the iframe and the client gets the Plugin UI.
 
 ## Why iframe?
 

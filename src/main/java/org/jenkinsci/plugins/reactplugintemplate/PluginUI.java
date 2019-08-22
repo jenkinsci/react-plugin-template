@@ -1,4 +1,4 @@
-package org.jenkinsci.plugins.reactboilerplate;
+package org.jenkinsci.plugins.reactplugintemplate;
 
 import hudson.ExtensionList;
 import hudson.security.csrf.CrumbIssuer;
@@ -8,7 +8,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
-import org.jenkinsci.plugins.reactboilerplate.model.Todo;
+import org.jenkinsci.plugins.reactplugintemplate.model.Todo;
 import org.kohsuke.stapler.HttpResponse;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.json.JsonHttpResponse;
@@ -34,8 +34,6 @@ public class PluginUI {
         if (config == null) {
             config = ExtensionList.lookup(PluginConfig.class).get(0);
         }
-        String restOfPath = request.getRestOfPath();
-
         List<String> params = getRequestParams(request);
 
         switch (params.get(0)) {

@@ -1,5 +1,5 @@
 {
-    "name": "working_hours_plugin",
+    "name": "ReactPluginTemplate ",
     "version": "1.0.0",
     "description": "React Project for Working Hours Plugin",
     "repository": {
@@ -20,7 +20,7 @@
         "build:copy": "rimraf ../webapp/page && npm run build && node internals/copy-paste.js",
         "build-test": "cross-env NODE_ENV=production webpack --config internals/webpack/webpack.test.babel.js --color -p --progress --hide-modules --display-optimization-bailout",
         "build:clean": "rimraf ./build",
-        "start": "cross-env NODE_ENV=development BASE_URL=\"/jenkins/react-boilerplate\" node server",
+        "start": "cross-env NODE_ENV=development BASE_URL=\"/jenkins/react-plugin-template\" node server",
         "start:watch-build": "cross-env NODE_ENV=development webpack --config internals/webpack/webpack.prod.babel.js --color -p --progress --hide-modules --display-optimization-bailout --watch",
         "start:tunnel": "cross-env NODE_ENV=development ENABLE_TUNNEL=true node server",
         "start:production": "npm run test && npm run build && npm run start:prod",

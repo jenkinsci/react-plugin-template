@@ -8,7 +8,7 @@
         <version>3.6</version>
         <relativePath/>
     </parent>
-    <artifactId>react-boilerplate</artifactId>
+    <artifactId>react-plugin-template</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>hpi</packaging>
     <properties>
@@ -17,9 +17,9 @@
         <node.version>10.13.0</node.version>
         <npm.version>6.8.0</npm.version>
     </properties>
-    <name>React Boilerplate for Jenkins Plugin</name>
-    <description>Boilerplate to write Jenkins plugin in React.</description>
-    <url>https://github.com/ShenJack/ReactPluginBoilerplateforJenkins</url>
+    <name>React Plugin Template</name>
+    <description>Template to write Jenkins plugin in React.</description>
+    <url>https://github.com/jenkinsci/react-plugin-template</url>
     <licenses>
         <license>
             <name>MIT License</name>

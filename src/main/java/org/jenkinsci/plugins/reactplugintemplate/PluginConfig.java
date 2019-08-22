@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.jenkinsci.plugins.reactboilerplate;
+package org.jenkinsci.plugins.reactplugintemplate;
 
 import hudson.Extension;
 import hudson.model.Describable;
 import hudson.model.Descriptor;
-import org.jenkinsci.plugins.reactboilerplate.model.Todo;
+import org.jenkinsci.plugins.reactplugintemplate.model.Todo;
 
 import javax.annotation.CheckForNull;
 import java.util.Collections;
