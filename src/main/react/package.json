@@ -65,7 +65,7 @@
         "loadable-components": "2.2.3",
         "lodash": "4.17.11",
         "minimist": "1.2.0",
-        "moment": "2.24.0",
+        "moment": "2.29.2",
         "only": "^0.0.2",
         "prop-types": "15.6.2",
         "qs": "latest",
